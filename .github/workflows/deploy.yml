@@ -21,11 +21,11 @@ jobs:
           script: |
             sudo apt-get update
             sudo apt install yt-dlp
-            cd ~/AWS-SERVER
+            cd ~/VM-ORACLE
             git pull origin main
             npm install @whiskeysockets/baileys@latest
             npm install
-            pm2 restart aws-v2 || pm2 start src/index.js --name aws-v2
+            pm2 restart bmm || pm2 start src/index.js --name bmm
             # Wait for the bot to fully initialize
             sleep 60
             # Send update notifications with the correct version
