@@ -41,7 +41,7 @@ function measureDownloadSpeed(url = 'https://speed.hetzner.de/1MB.bin') {
 function getSpeedTest() {
     return new Promise((resolve, reject) => {
         exec('speedtest', (error, stdout) => {
-            if (error) return reject(`⚠️ [SYSTEM ERROR]: Speedtest module failure.`);
+            if (error) return reject(`⚠️ [SYSTEM ERROR]: Speedtest module failure.`, error);
             try {
                 const pingMatch = stdout.match(/Latency:\s+([\d.]+)\s+ms/);
                 const downloadMatch = stdout.match(/Download:\s+([\d.]+)\s+Mbps/);
@@ -53,7 +53,7 @@ function getSpeedTest() {
                     upload: uploadMatch ? parseFloat(uploadMatch[1]) : 'Error'
                 });
             } catch (e) {
-                reject(`⚠️ [SYSTEM ERROR]: Parse failure in speedtest module.`);
+                reject(`⚠️ [SYSTEM ERROR]: Parse failure in speedtest module.`, e); 
             }
         });
     });
