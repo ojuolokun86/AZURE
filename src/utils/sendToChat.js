@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { getContextInfo, getForwardedContext } = require('../utils/contextInfo');
+const { getContextInfo, getForwardedContext } = require('./contextInfo');
 const { recordBotActivity } = require('../database/database');
 
 // Load a thumbnail image for rich preview (optional)

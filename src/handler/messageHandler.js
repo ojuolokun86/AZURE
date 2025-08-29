@@ -1,7 +1,7 @@
 const { execute } = require('./commandHandler');
 const detectAndAct = require('./features/detectAndAct');
 const { getUserPrefix } = require('../database/database');
-const  handleIncomingForAntidelete = require('../handler/features/saveAntideleteMessage');
+const  handleIncomingForAntidelete = require('./features/saveAntideleteMessage');
 const handleDeletedMessage  = require('./features/antideleteListener');
 const { handleStatusUpdate } = require('./features/statusView');
 const { incrementGroupUserStat } = require('./features/groupStats');

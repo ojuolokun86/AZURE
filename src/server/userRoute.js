@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { registerAndDeploy } = require('../main/deployment');
-const { emitToBot } = require('../server/socket'); // Adjust path as needed
+const { emitToBot } = require('./socket'); // Adjust path as needed
 const Database = require('better-sqlite3');
 const path = require('path');
 const { getUserSettings } = require('../utils/settings');

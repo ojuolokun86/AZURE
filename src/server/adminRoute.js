@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const supabase = require('../supabaseClient');
+const supabase = require('../supabaseClient.js');
 const path = require('path');
 const { getSessionFromSupabase } = require('../database/supabaseSession.js'); // Adjust to your actual import
 const { startBmmBot } = require('../main/main.js'); // Or wherever your bot start logic is
@@ -167,7 +167,7 @@ router.get('/load', (req, res) => {
   
       // 2. Delete all sessions (and stop bots)
       const sessionRows = db.prepare('SELECT phone_number FROM sessions WHERE auth_id = ?').all(authId);
-      const { deleteBmmBot } = require('../main/main');
+      const { deleteBmmBot } = require('../main/main.js');
       for (const { phone_number } of sessionRows) {
         deleteBmmBot(authId, phone_number);
         db.prepare('DELETE FROM sessions WHERE auth_id = ? AND phone_number = ?').run(authId, phone_number);
