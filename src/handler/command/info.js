@@ -120,8 +120,9 @@ async function infoCommand(sock, msg) {
 > UPLOAD: ${speed.upload} Mbps
 > SERVER ID: ${serverId}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    } catch {
+    } catch (e) {
         vpnBlock = `⚠️ [NETWORK FAILURE]: Unable to retrieve VPN or speed metrics.\n`;
+        console.log('❌ Error fetching VPN or speed metrics', e);
     }
 
     try {
@@ -133,8 +134,9 @@ async function infoCommand(sock, msg) {
 > OPERATIONAL NODE: ${name}
 > STATUS MESSAGE: ${bio.status || 'Unavailable'}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    } catch {
+    } catch (e) {
         botBlock = `⚠️ [BOT ERROR]: Failed to retrieve identity modules.\n`;
+        console.log('❌ Error fetching bot status', e);
     }
 
     try {
@@ -146,12 +148,14 @@ async function infoCommand(sock, msg) {
             privacyBlock += `> ${key.toUpperCase()}: ${val}\n`;
         }
         privacyBlock += `━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-    } catch {
+    } catch (e) {
         privacyBlock = `⚠️ [PRIVACY MODULE]: Unable to access settings.\n`;
+        console.log('❌ Error fetching privacy settings', e);
     }
 
-    const osInfo = getOSInfo();
-    osBlock = `
+    try {
+        const osInfo = getOSInfo();
+        osBlock = `
 🖥️ [SYSTEM CORE DIAGNOSTICS]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 > HOSTNAME: ${osInfo.hostname}
@@ -161,9 +165,14 @@ async function infoCommand(sock, msg) {
 > CPU: ${osInfo.cpu}
 > MEMORY: ${osInfo.freeMem} / ${osInfo.totalMem}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    } catch (e) {
+        osBlock = `⚠️ [SYSTEM ERROR]: Failed to retrieve OS information.\n`;
+        console.log('❌ Error fetching OS information', e);
+    }
 
     const final = `${vpnBlock}${botBlock}${privacyBlock}${osBlock}`;
     await sendToChat(sock, from, { message: final }, { quoted: quote });
 }
 
 module.exports = infoCommand;
+    
