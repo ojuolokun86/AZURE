@@ -1,4 +1,4 @@
-name: Deploy to Oracle VM
+name: Deploy to Azure VM
 
 on:
   push:
@@ -15,13 +15,11 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.ORACLE_HOST }}
-          username: ${{ secrets.ORACLE_USER }}
-          key: ${{ secrets.ORACLE_SSH_KEY }}
+          host: ${{ secrets.AZURE_HOST }}
+          username: ${{ secrets.AZURE_USER }}
+          key: ${{ secrets.AZURE_SSH_KEY }}
           script: |
-            sudo apt-get update
-            sudo apt install yt-dlp
-            cd ~/VM-ORACLE
+            cd ~/AZURE
             git pull origin main
             npm install @whiskeysockets/baileys@latest
             npm install
